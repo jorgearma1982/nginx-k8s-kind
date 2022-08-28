@@ -334,17 +334,17 @@ ingress:
 ```shell
 $ kubectl -n ingress get all
 NAME                                                  READY   STATUS    RESTARTS   AGE
-pod/nginx-ingress-nginx-controller-7796c8f497-x7w8n   1/1     Running   0          54s
+pod/nginx-ingress-nginx-controller-68487bdd78-pkgjz   1/1     Running   0          4h13m
 
-NAME                                               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-service/nginx-ingress-nginx-controller             ClusterIP   10.96.249.209   <none>        80/TCP,443/TCP   54s
-service/nginx-ingress-nginx-controller-admission   ClusterIP   10.96.112.174   <none>        443/TCP          54s
+NAME                                               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                      AGE
+service/nginx-ingress-nginx-controller             NodePort    10.96.65.118   <none>        80:31682/TCP,443:32337/TCP   4h13m
+service/nginx-ingress-nginx-controller-admission   ClusterIP   10.96.195.45   <none>        443/TCP                      4h13m
 
 NAME                                             READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/nginx-ingress-nginx-controller   1/1     1            1           54s
+deployment.apps/nginx-ingress-nginx-controller   1/1     1            1           4h13m
 
 NAME                                                        DESIRED   CURRENT   READY   AGE
-replicaset.apps/nginx-ingress-nginx-controller-7796c8f497   1         1         1       54s
+replicaset.apps/nginx-ingress-nginx-controller-68487bdd78   1         1         1       4h13m
 ```
 
 En el listado vemos que hay un deployment llamado `nginx-ingress-nginx-controller`, el cual tiene los siguientes pods:
@@ -374,18 +374,21 @@ Realizamos el despliegue de una aplicación:
 
 ```shell
 $ kubectl apply -f whoami/1_deployment.yml
+deployment.apps/whoami created
 ```
 
 Creamos el service de una aplicación:
 
 ```shell
 $ kubectl apply -f whoami/2_service.yml
+service/whoami created
 ```
 
 Creamos el ingress de una aplicación:
 
 ```shell
 $ kubectl apply -f whoami/3_ingress.yml
+ingress.networking.k8s.io/whoami created
 ```
 
 Esperamos unos segundos a que levanten los servicios y continuamos con la validaciones.
@@ -397,17 +400,17 @@ Ahora validamos listando todos los recursos del namespace `default`:
 ```shell
 $ kubectl -n default get all
 NAME                          READY   STATUS    RESTARTS   AGE
-pod/whoami-6977d564f9-dq5pr   1/1     Running   0          2m35s
+pod/whoami-6977d564f9-nrrg2   1/1     Running   0          92s
 
-NAME                 TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
-service/kubernetes   ClusterIP   10.96.0.1      <none>        443/TCP    4m51s
-service/whoami       ClusterIP   10.96.27.189   <none>        8080/TCP   2m24s
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP    16h
+service/whoami       ClusterIP   10.96.144.246   <none>        8080/TCP   87s
 
 NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/whoami   1/1     1            1           2m35s
+deployment.apps/whoami   1/1     1            1           92s
 
 NAME                                DESIRED   CURRENT   READY   AGE
-replicaset.apps/whoami-6977d564f9   1         1         1       2m35s
+replicaset.apps/whoami-6977d564f9   1         1         1       92s
 ```
 
 Como se puede ver se tiene los recursos `deployment`, el `replicaset`, los `pods` y el `service`.
