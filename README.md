@@ -449,6 +449,44 @@ Ahora ejecutamos el script con las pruebas:
 
 ```shell
 $ k6 run k6/script.js
+
+          /\      |‾‾| /‾‾/   /‾‾/
+     /\  /  \     |  |/  /   /  /
+    /  \/    \    |     (   /   ‾‾\
+   /          \   |  |\  \ |  (‾)  |
+  / __________ \  |__| \__\ \_____/ .io
+
+  execution: local
+     script: k6/script.js
+     output: -
+
+  scenarios: (100.00%) 1 scenario, 50 max VUs, 2m10s max duration (incl. graceful stop):
+           * default: Up to 50 looping VUs for 1m40s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+running (1m40.6s), 00/50 VUs, 2398 complete and 0 interrupted iterations
+default ✓ [======================================] 00/50 VUs  1m40s
+
+     ✓ status code is 200
+
+   ✓ checks.........................: 100.00% ✓ 2398      ✗ 0
+     data_received..................: 1.4 MB  14 kB/s
+     data_sent......................: 271 kB  2.7 kB/s
+     http_req_blocked...............: avg=7.79µs  min=0s    med=2µs    max=591µs   p(90)=3µs    p(95)=5µs
+     http_req_connecting............: avg=4.93µs  min=0s    med=0s     max=368µs   p(90)=0s     p(95)=0s
+   ✓ http_req_duration..............: avg=1.31ms  min=693µs med=1.2ms  max=54.46ms p(90)=1.68ms p(95)=1.87ms
+       { expected_response:true }...: avg=1.31ms  min=693µs med=1.2ms  max=54.46ms p(90)=1.68ms p(95)=1.87ms
+     http_req_failed................: 0.00%   ✓ 0         ✗ 2398
+   ✓ http_req_rate..................: 50.00%  ✓ 4796      ✗ 4796
+     http_req_receiving.............: avg=17.48µs min=4µs   med=15µs   max=164µs   p(90)=28µs   p(95)=34.14µs
+     http_req_sending...............: avg=8.48µs  min=2µs   med=7µs    max=68µs    p(90)=14µs   p(95)=19µs
+     http_req_tls_handshaking.......: avg=0s      min=0s    med=0s     max=0s      p(90)=0s     p(95)=0s
+     http_req_waiting...............: avg=1.29ms  min=674µs med=1.17ms max=54.39ms p(90)=1.64ms p(95)=1.83ms
+     http_reqs......................: 2398    23.838753/s
+     iteration_duration.............: avg=1s      min=1s    med=1s     max=1.05s   p(90)=1s     p(95)=1s
+     iterations.....................: 2398    23.838753/s
+     vus............................: 2       min=1       max=50
+     vus_max........................: 50      min=50      max=50
 ```
 
 ## Limpieza
