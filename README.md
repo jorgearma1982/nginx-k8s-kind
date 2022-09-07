@@ -18,6 +18,8 @@ Es necesario tener instalado y en ejecución docker para poder gestionar contene
 realizaremos en un equipo con MacOS, por lo que instalaremos la implementación `colima` para correr docker
 en local, si tienes Linux puedes instalar docker usando tu manejador de paquetes favorito.
 
+**NOTA:** Si no quiere usar colima porque ya tiene `Docker Desktop` o algún otro motor de contenedores puede hacerlo.
+
 Iniciamos instalando colima y el cliente docker:
 
 ```shell
@@ -263,7 +265,7 @@ NAME      STATUS   AGE
 ingress   Active   1s
 ```
 
-Ejecutamos la instalación con los parámetros personalizados para habilitar el servicio de admin y postgresql:
+Ejecutamos la instalación con los parámetros personalizados para este ambiente de nginx:
 
 ```shell
 $ helm install nginx ingress-nginx/ingress-nginx \
