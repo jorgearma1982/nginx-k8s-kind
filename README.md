@@ -116,12 +116,12 @@ puerto en el host hacia el puerto en un servicio dentro del cluster, los puertos
 
 Note también que los puertos que se re direccionan se asocian a la dirección local `127.0.0.1`.
 
-Ahora creamos el cluster versión `1.23.4` con la configuración en el archivo `kind/cluster-multi-ingress.yml`:
+Ahora creamos el cluster versión `1.21.14` con la configuración en el archivo `kind/cluster-multi-ingress.yml`:
 
 ```shell
-$ kind create cluster --name nginxcluster --image kindest/node:v1.23.4 --config=kind/cluster-multi-ingress.yml
+$ kind create cluster --name nginxcluster --image kindest/node:v1.21.14 --config=kind/cluster-multi-ingress.yml
 Creating cluster "nginxcluster" ...
- ✓ Ensuring node image (kindest/node:v1.23.4) 🖼
+ ✓ Ensuring node image (kindest/node:v1.21.14) 🖼
  ✓ Preparing nodes 📦 📦
  ✓ Writing configuration 📜
  ✓ Starting control-plane 🕹️
@@ -133,7 +133,7 @@ You can now use your cluster with:
 
 kubectl cluster-info --context kind-nginxcluster
 
-Thanks for using kind! 😊
+Have a question, bug, or feature request? Let us know! https://kind.sigs.k8s.io/#community 🙂
 ```
 
 Listo!! Ya tenemos un cluster con un nodo de control plane y un worker, hagamos un listado de los clusters de kind:
@@ -149,9 +149,9 @@ Veamos que pasó a nivel contenedores docker:
 
 ```shell
 $ docker ps
-CONTAINER ID   IMAGE                  COMMAND                  CREATED              STATUS              PORTS                       NAMES
-00de2ab27904   kindest/node:v1.23.4   "/usr/local/bin/entr…"   About a minute ago   Up About a minute   127.0.0.1:80->31682/tcp     nginxcluster-worker
-493b57478be4   kindest/node:v1.23.4   "/usr/local/bin/entr…"   About a minute ago   Up About a minute   127.0.0.1:53428->6443/tcp   nginxcluster-control-plane
+CONTAINER ID   IMAGE                   COMMAND                  CREATED              STATUS              PORTS                       NAMES
+97357b5d7ae9   kindest/node:v1.21.14   "/usr/local/bin/entr…"   About a minute ago   Up About a minute   127.0.0.1:80->31682/tcp     nginxcluster-worker
+ac8ceefd6e3f   kindest/node:v1.21.14   "/usr/local/bin/entr…"   About a minute ago   Up About a minute   127.0.0.1:52489->6443/tcp   nginxcluster-control-plane
 ```
 
 Arriba se puede ver hay dos contenedores en ejecución asociados a los nodos del cluster.
@@ -213,8 +213,8 @@ Listamos los nodos del cluster:
 ```shell
 $ kubectl get nodes
 NAME                         STATUS   ROLES                  AGE     VERSION
-nginxcluster-control-plane   Ready    control-plane,master   2m10s   v1.23.4
-nginxcluster-worker          Ready    <none>                 94s     v1.23.4
+nginxcluster-control-plane   Ready    control-plane,master   2m10s   v1.21.14
+nginxcluster-worker          Ready    <none>                 94s     v1.21.14
 ```
 
 Como se puede ver tenemos un nodo que es el maestro, es decir, la capa de control, y tenemos otro que es el worker.
@@ -432,6 +432,14 @@ replicaset.apps/whoami-6977d564f9   1         1         1       92s
 ```
 
 Como se puede ver se tiene los recursos `deployment`, el `replicaset`, los `pods` y el `service`.
+
+También veamos los ingress:
+
+```shell
+$ kubectl -n default get ingress
+NAME     CLASS   HOSTS   ADDRESS     PORTS   AGE
+whoami   nginx   *       localhost   80      40s
+```
 
 Ahora validamos que responda el servicio whoami a través de nginx:
 
