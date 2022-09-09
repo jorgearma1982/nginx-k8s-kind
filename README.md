@@ -2,15 +2,17 @@
 
 ## Introducción
 
-En este guía mostramos como instalar un cluster de `Kubernetes` en la laptop usando la implementación
-de `kind`, la cual corre cada componente en un contenedor en lugar de usar máquinas virtuales, originalmente
-fue diseñado para probar kubernetes en sí, pero también puede ser usado para desarrollo local ó CI.
+En este guía mostramos como instalar un cluster de `Kubernetes` en la laptop ó máquina de escritorio y usarlo para
+desarrollo y pruebas en local, usaremos la implementación de `kind`, la cual corre cada nodo del cluster en un
+contenedor en lugar de usar máquinas virtuales, originalmente fue diseñado para probar kubernetes en sí,
+pero también puede ser usado para desarrollo local ó CI.
 
-Este proyecto puede servir para comprender los conceptos, la arquitectura y adentrarnos más en lo que
-son los contenedores, los pods y su relación con los microservicios.
+La documentación y el código en este repositorio puede servir para comprender los conceptos, la arquitectura y
+adentrarnos más en lo que son los contenedores, los pods y su relación con los micro servicios y aplicaciones
+nativas de nube.
 
-Instalaremos `Nginx` como Ingress Controller y una aplicación web simple para validar la funcionalidad de Nginx
-como Ingress.
+Sobre el cluster instalaremos `Nginx` como `Ingress Controller` y una aplicación web simple para validar la
+funcionalidad de Nginx como `Proxy Reverso`.
 
 ## Requisitos
 
@@ -18,7 +20,7 @@ Es necesario tener instalado y en ejecución docker para poder gestionar contene
 realizaremos en un equipo con MacOS, por lo que instalaremos la implementación `colima` para correr docker
 en local, si tienes Linux puedes instalar docker usando tu manejador de paquetes favorito.
 
-**NOTA:** Si no quiere usar colima porque ya tiene `Docker Desktop` o algún otro motor de contenedores puede hacerlo.
+**NOTA:** Si ya usas la implementación de Docker Desktop puedes saltar los pasos de colima.
 
 Iniciamos instalando colima y el cliente docker:
 
@@ -46,7 +48,7 @@ Ahora instalamos los paquetes para kubernetes con `kind`, también instalamos el
 `k6` la herramienta de pruebas de carga de aplicaciones web:
 
 ```shell
-$ brew install kind kubectl k6
+$ brew install kind kubectl helm k6
 ```
 
 Validamos la instalación de las herramientas, iniciamos con kind:
@@ -70,6 +72,20 @@ Y finalmente la versión de `k6`:
 $ k6 version
 k6 v0.39.0 ((devel)) 
 ```
+
+Clona este repositorio:
+
+```shell
+$ git clone https://github.com/jorgearma1982/nginx-k8s-kind.git
+```
+
+Cambia tu directorio de trabajo a `nginx-k8s-kind`:
+
+```shell
+$ cd nginx-k8s-kind
+```
+
+Listo, ya tienes todo para empezar a crear el cluster.
 
 ## Instalación de cluster
 
@@ -603,6 +619,7 @@ La siguiente es una lista de referencias externas que pueden serle de utilidad:
 * [Kubernetes - Orquestación de contenedores para producción](https://kubernetes.io/es/)
 * [kind - home](https://kind.sigs.k8s.io/)
 * [kind - quick start](https://kind.sigs.k8s.io/docs/user/quick-start/)
+* [Kindest - node images repository](https://hub.docker.com/r/kindest/node/tags)
 * [Kubernetes - Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 * [Nginx Ingress Controller](https://github.com/kubernetes/ingress-nginx)
 * [Nginx - Installation Guide](https://kubernetes.github.io/ingress-nginx/deploy/)
